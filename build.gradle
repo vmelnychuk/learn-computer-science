@@ -1,0 +1,36 @@
+plugins {
+    id 'java'
+    id 'groovy'
+    id 'checkstyle'
+}
+
+
+sourceCompatibility = 1.8
+targetCompatibility = sourceCompatibility
+compileJava.options.encoding = 'UTF-8'
+
+group 'io.neko'
+version '0.0.1' + new Date().format("-yyyyMMddHHmmss").toString()
+jar {
+    archiveName = 'learn-computer-science.jar'
+    version = 'learn-computer-science' + new Date().format("-yyyyMMddHHmmss").toString()
+    manifest {
+        attributes(
+                'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+                'Main-Class': 'io.neko.learn.cs.Main'
+        )
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+checkstyle {
+    toolVersion = '7.4'
+    configFile = rootProject.file('checkstyle.xml')
+}
